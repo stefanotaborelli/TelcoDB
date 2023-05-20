@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Employee Home</title>
+
+    <style>
+      #content-wrapper {
+        min-width: 640px;
+        width: 100%;
+        max-width: 720px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navbar -->
+    <header class="navbar row aln-center jst-center w100">
+      <div class="row aln-center jst-space-between w100">
+        <div class="row aln-center jst-start">
+          <a class="nav-link" href="employee-home">Home</a>
+          <a class="nav-link" href="sales-report">Sales Report</a>
+        </div>
+        <a class="nav-link" href="logout-employee">Log Out</a>
+      </div>
+    </header>
+
+    <section class="error-prompt w100" th:if="${param.error != null}">
+      <p th:text="${param.error}">Error prompt</p>
+    </section>
+    <section class="success-prompt w100" th:if="${param.success != null}">
+      <p th:text="'Operation successful!'">Success prompt</p>
+    </section>
+
+    <!-- Content -->
+    <section class="col aln-center jst-center w100">
+      <div id="content-wrapper">
+        <div class="form-wrapper w100 col aln-center jst-center margin-bottom-children-3">
+          <h4>Create Product</h4>
+          <form action="create-product" method="POST" class="w100 col aln-center jst-start margin-bottom-children-2">
+            <div class="w100 col aln-center jst-start">
+              <input type="text" name="name" placeholder="name" required
+                     class="input-fld w100">
+              <input type="number" min="0" step="0.01" name="fee" placeholder="fee" required
+                     class="input-fld w100">
+            </div>
+            <input type="submit" value="Create"
+                   class="submit-btn w100 active-btn">
+          </form>
+        </div>
+
+        <div class="form-wrapper w100 col aln-center jst-center margin-bottom-children-3">
+          <h4>Create Package</h4>
+          <form action="create-service" method="POST"
+                class="w100 col aln-start jst-start">
+            <fieldset class="w100" style="border: 1px solid gray; border-radius: 10px;">
+              <h5>Add new service</h5>
+              <!-- Service insertion fields -->
+              <div class="col aln-start jst-center pr-1">
+                <!-- Type selection -->
+                <div class="row w100 aln-center jst-start pt-1">
+                  <div class="pr-2">
+                    <label for="type-1">Service type: </label>
+                  </div>
+                  <select name="type" id="type-1" onchange="updateServiceAttributes(1)" required>
+                    <option value="0">Fixed Phone</option>
+                    <option value="1">Fixed Internet</option>
+                    <option value="2">Mobile Phone</option>
+                    <option value="3">Mobile Internet</option>
+                  </select>
+                  <div class="pl-2">
+                    <input type="submit" class="submit-btn" value="Add">
+                  </div>
+                </div>
+                <!-- Params selection -->
+                <div class="col w100 aln-center jst-center pt-1">
+                  <div class="row w100 aln-center jst-center hidden" id="minutes-wrapper-1">
+                    <div class="w50 pr-1">
+                      <label>Included minutes:</label>
+                      <input type="number" min="0" step="1" name="minutes" placeholder="minutes"
+                             class="input-fld w100">
+                    </div>
+                    <div class="w50 pl-1">
+                      <label>Fee for extra minutes:</label>
+                      <input type="number" min="0" step="0.01" name="extra-minutes" placeholder="extra minutes"
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                  <div class="row w100 aln-center jst-center hidden" id="sms-wrapper-1">
+                    <div class="w50 pr-1">
+                      <label>Included SMSs:</label>
+                      <input type="number" min="0" step="1" name="sms" placeholder="SMSs"
+                             class="input-fld w100">
+                    </div>
+                    <div class="w50 pl-1">
+                      <label>Fee for extra SMSs:</label>
+                      <input type="number" min="0" step="0.01" name="extra-sms" placeholder="extra SMSs"
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                  <div class="row w100 aln-center jst-center hidden" id="giga-wrapper-1">
+                    <div class="w50 pr-1">
+                      <label>Included GBs:</label>
+                      <input type="number" min="0" step="1" name="giga" placeholder="GIGAs"
+                             class="input-fld w100">
+                    </div>
+                    <div class="w50 pl-1">
+                      <label>Fee for extra GBs:</label>
+                      <input type="number" min="0" step="0.01" name="extra-giga" placeholder="extra GIGAs"
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+          <form action="create-package" method="POST"
+                class="w100 col aln-start jst-start margin-bottom-children-3">
+            <!-- Name -->
+            <div class="w100 col aln-start jst-start">
+              <label>Package name:</label>
+              <input type="text" name="name" placeholder="name" required
+                     class="input-fld w100">
+            </div>
+
+            <!-- Validity -->
+            <div class="form-section col aln-start jst-start w100 margin-bottom-children-1">
+              <h5>Validity options</h5>
+              <div class="col w100 aln-center jst-center">
+                <!-- Validity insertion fields -->
+                <div class="w100 row aln-end jst-center pt-1" id="validity-insertion-1">
+                  <div class="row aln-center jst-center w90 pr-1">
+                    <div class="pr-1 w50">
+                      <label>Duration (in months):</label>
+                      <input type="number" min="12" max="36" step="12" name="duration" id="duration-1" placeholder="duration" required
+                             class="input-fld w100">
+                    </div>
+                    <div class="pl-1 w50">
+                      <label>Monthly fee:</label>
+                      <input type="number" min="0" step="0.01" name="fee" id="fee-1" placeholder="fee" required
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                  <!-- Add/Remove button -->
+                  <div class="pl-1 w10 col aln-center jst-end margin-bottom-children-1">
+                    <a href="#" class="submit-btn w100 active-btn" onclick="addValidityOptionInput()" id="add-validity">+</a>
+                  </div>
+                </div>
+                <!-- Validity insertion fields -->
+                <div class="w100 row aln-end jst-center hidden pt-1" id="validity-insertion-2">
+                  <div class="row aln-center jst-center w90 pr-1">
+                    <div class="pr-1 w50">
+                      <label>Duration (in months):</label>
+                      <input type="number" min="12" max="36" step="12" name="duration" id="duration-2" placeholder="duration"
+                             class="input-fld w100">
+                    </div>
+                    <div class="pl-1 w50">
+                      <label>Monthly fee:</label>
+                      <input type="number" min="0" step="0.01" name="fee" id="fee-2" placeholder="fee"
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                  <!-- Add/Remove button -->
+                  <div class="pl-1 w10 col aln-center jst-end margin-bottom-children-1">
+                    <a href="#" class="submit-btn w100 active-btn" onclick="removeValidityOptionInput(2)">-</a>
+                  </div>
+                </div>
+                <!-- Validity insertion fields -->
+                <div class="w100 row aln-end jst-center hidden pt-1" id="validity-insertion-3">
+                  <div class="row aln-center jst-center w90 pr-1">
+                    <div class="pr-1 w50">
+                      <label>Duration (in months):</label>
+                      <input type="number" min="12" max="36" step="12" name="duration" id="duration-3" placeholder="duration"
+                             class="input-fld w100">
+                    </div>
+                    <div class="pl-1 w50">
+                      <label>Monthly fee:</label>
+                      <input type="number" min="0" step="0.01" name="fee" id="fee-3" placeholder="fee"
+                             class="input-fld w100">
+                    </div>
+                  </div>
+                  <!-- Add/Remove button -->
+                  <div class="pl-1 w10 col aln-center jst-end margin-bottom-children-1">
+                    <a href="#" class="submit-btn w100 active-btn" onclick="removeValidityOptionInput(3)">-</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Services -->
+            <div class="form-section col aln-start jst-start w100 margin-bottom-children-1">
+              <h5>Included services</h5>
+              <div class="col w100 aln-center jst-start pb-1">
+                <div class="row w100 aln-center jst-start pb-1 pt-1">
+                  <p>Fixed phone services:</p>
+                </div>
+                <div class="row w100 aln-center jst-end table-heading">
+                  <div class="w20"></div>
+                  <div class="w20 row aln-center jst-start">Minutes</div>
+                  <div class="w20 row aln-center jst-start">Extra minutes</div>
+                  <div class="w20 row aln-center jst-start">SMS</div>
+                  <div class="w20 row aln-center jst-start">Extra SMS</div>
+                </div>
+                <div class="w100 vertical-scroll table-body">
+                  <div class="row w100 aln-center jst-start" th:each="service : ${fixedPhoneServices}">
+                    <div class="w20 row aln-center jst-center table-cell">
+                      <input type="checkbox" name="services" th:value="${service.getIdService()}"
+                             class="w10">
+                      <input type="number" th:name="'mult-' + ${service.getIdService()}" step="1" min="1" value="1" name="multiplier"
+                             class="w20">
+                    </div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getMinutes()}"> Minutes </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraMinutesFee()}"> Extra Minutes </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getSms()}"> SMS </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraSmsFee()}"> Extra SMS </span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col w100 aln-center jst-start pb-1 pt-1">
+                <div class="row w100 aln-center jst-start pb-1 pt-1">
+                  <p>Fixed Internet services:</p>
+                </div>
+                <div class="row w100 aln-center jst-end table-heading">
+                  <div class="w20"></div>
+                  <div class="w20 row aln-center jst-start">GIGA</div>
+                  <div class="w20 row aln-center jst-start">Extra GIGA</div>
+                  <div class="w20 row aln-center jst-start"></div>
+                  <div class="w20 row aln-center jst-start"></div>
+                </div>
+                <div class="w100 vertical-scroll table-body">
+                  <div class="row w100 aln-center jst-start" th:each="service : ${fixedInternetServices}">
+                    <div class="w20 row aln-center jst-center table-cell">
+                      <input type="checkbox" name="services" th:value="${service.getIdService()}"
+                             class="w10">
+                      <input type="number" th:name="'mult-' + ${service.getIdService()}" step="1" min="1" value="1" name="multiplier"
+                             class="w20">
+                    </div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getGiga()}"> GIGA </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraGigaFee()}"> Extra GIGA </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"></div>
+                    <div class="w20 row aln-center jst-start table-cell"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col w100 aln-center jst-start pb-1 pt-1">
+                <div class="row w100 aln-center jst-start pb-1 pt-1">
+                  <p>Mobile phone services:</p>
+                </div>
+                <div class="row w100 aln-center jst-end table-heading">
+                  <div class="w20"></div>
+                  <div class="w20 row aln-center jst-start">Minutes</div>
+                  <div class="w20 row aln-center jst-start">Extra minutes</div>
+                  <div class="w20 row aln-center jst-start">SMS</div>
+                  <div class="w20 row aln-center jst-start">Extra SMS</div>
+                </div>
+                <div class="w100 vertical-scroll table-body">
+                  <div class="row w100 aln-center jst-start" th:each="service : ${mobilePhoneServices}">
+                    <div class="w20 row aln-center jst-center table-cell">
+                      <input type="checkbox" name="services" th:value="${service.getIdService()}"
+                             class="w10">
+                      <input type="number" th:name="'mult-' + ${service.getIdService()}" step="1" min="1" value="1" name="multiplier"
+                             class="w20">
+                    </div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getMinutes()}"> Minutes </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraMinutesFee()}"> Extra Minutes </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getSms()}"> SMS </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraSmsFee()}"> Extra SMS </span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col w100 aln-center jst-start pt-1">
+                <div class="row w100 aln-center jst-start pb-1 pt-1">
+                  <p>Mobile Internet services:</p>
+                </div>
+                <div class="row w100 aln-center jst-end table-heading">
+                  <div class="w20"></div>
+                  <div class="w20 row aln-center jst-start">GIGA</div>
+                  <div class="w20 row aln-center jst-start">Extra GIGA</div>
+                  <div class="w20 row aln-center jst-start"></div>
+                  <div class="w20 row aln-center jst-start"></div>
+                </div>
+                <div class="w100 vertical-scroll table-body">
+                  <div class="row w100 aln-center jst-start" th:each="service : ${mobileInternetServices}">
+                    <div class="w20 row aln-center jst-center table-cell">
+                      <input type="checkbox" name="services" th:value="${service.getIdService()}"
+                             class="w10">
+                      <input type="number" th:name="'mult-' + ${service.getIdService()}" step="1" min="1" value="1" name="multiplier"
+                             class="w20">
+                    </div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getGiga()}"> GIGA </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"><span th:text="${service.getExtraGigaFee()}"> Extra GIGA </span></div>
+                    <div class="w20 row aln-center jst-start table-cell"></div>
+                    <div class="w20 row aln-center jst-start table-cell"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Products -->
+            <div class="form-section col aln-start jst-start w100 margin-bottom-children-1 w100">
+              <h5>Optional products</h5>
+              <div class="col w100 aln-center jst-start pb-1">
+                <div class="row w100 aln-center jst-end table-heading">
+                  <div class="w10"> </div>
+                  <div class="w70 row aln-center jst-start">Name</div>
+                  <div class="w20 row aln-center jst-start">Fee</div>
+                </div>
+                <div class="w100 vertical-scroll table-body">
+                  <div class="row w100 aln-center jst-start" th:each="product : ${products}">
+                    <div class="row w10 aln-center jst-center odd-tbl-col table-cell"><input type="checkbox" name="products" th:value="${product.getIdProduct()}"></div>
+                    <div class="row w70 aln-center jst-start even-tbl-col table-cell"><span th:text="${product.getName()}">Name</span></div>
+                    <div class="row w20 aln-center jst-start odd-tbl-col table-cell"><span th:text="${product.getFee()}">Fee</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <input type="submit" value="Create"
+                   class="submit-btn w100 active-btn">
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="js/dynamic-forms.js"></script>
+  </body>
+
+</html>

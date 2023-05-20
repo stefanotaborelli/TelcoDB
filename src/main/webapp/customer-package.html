@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="'TelcoDB | ' + ${package.getName()}"> TelcoDB | Package</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/fe9e631225.js" crossorigin="anonymous"></script>
+
+    <style>
+        #content-wrapper {
+            min-width: 480px;
+            width: 80%;
+            max-width: 1080px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<header class="navbar row aln-center jst-center w100">
+    <div class="row aln-center jst-space-between w100">
+        <div class="row aln-center jst-start">
+            <a class="nav-link" href="customer-home">Home</a>
+<!--            <a class="nav-link" href="buy-package">Buy Package</a>-->
+        </div>
+        <div class="row aln-center jst-start margin-right-children-1" th:if="${session.userid != null && session.username != null}">
+            <div class="nav-link row aln-center" style="color: white;">
+                <div>
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+                <div>
+                    <span th:text="${session.username}" class="nav-link"></span>
+                </div>
+            </div>
+            <a class="nav-link" href="logout-customer"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        </div>
+        <div class="row aln-center jst-start" th:unless="${session.userid != null && session.username != null}">
+            <a class="nav-link" href="customer-landing">Log In</a>
+        </div>
+    </div>
+</header>
+
+<section class="centered w100 pt-5" style="padding-top: 5rem; padding-bottom: 7rem">
+    <div class="col w100 aln-center jst-center" id="content-wrapper">
+        <!-- Package details -->
+        <div class="col w100 aln-start jst-start">
+            <div class="row w100 aln-center jst-center">
+                <h1>"<span th:text="${package.getName()}">Package name</span>"</h1>
+            </div>
+        </div>
+
+        <div class="col w100 aln-start jst-start pt-3">
+            <h4>Customize the package</h4>
+            <form class="w100 col aln-start jst-start pt-2" action="confirmation-page" method="GET">
+                <input type="number" th:value="${package.getIdPackage()}" hidden required name="id">
+                <!-- Validity selection -->
+                <div class="form-section col aln-start jst-start w100 margin-bottom-children-1 w100">
+                    <h5>Validity options</h5>
+                    <div class="col w100 aln-center jst-start pb-1">
+                        <div class="row w100 aln-center jst-end table-heading">
+                            <div class="w10"> </div>
+                            <div class="w70 row aln-center jst-start">Duration</div>
+                            <div class="w20 row aln-center jst-start">Fee</div>
+                        </div>
+                        <div class="w100 vertical-scroll table-body">
+                            <div class="row w100 aln-center jst-start" th:each="validity : ${package.getValidities()}">
+                                <div class="row w10 aln-center jst-center odd-tbl-col table-cell"><input type="radio" name="validity" th:value="${validity.getIdValidity()}" required></div>
+                                <div class="row w70 aln-center jst-start even-tbl-col table-cell"><span th:text="${validity.getDuration()}">Duration</span></div>
+                                <div class="row w20 aln-center jst-start odd-tbl-col table-cell"><span th:text="${validity.getFee()}">Fee</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- services selection -->
+                <div class="col w100 aln-start jst-start pt-3">
+                    <h5>Included Services</h5>
+                    <div class="col w100 aln-start jst-start pt-1 border-bottom-light pb-1 pt-1" th:each="service : ${package.getServices()}">
+                        <div class="row w100 aln-center jst-start even-tbl-col table-cell"><span th:text="${service.getServiceTypeHumanReadable()}" style="text-transform: uppercase">Service type</span></div>
+                        <div class="row w100 aln-center jst-space-between pt-1">
+                            <div class="row w50 aln-center jst-start">
+                                <div class="col aln-start jst-start" style="margin-right: 2rem">
+                                    <div class="row w100 aln-center jst-start"><p>Minutes:</p></div>
+                                    <div class="row w100 aln-center jst-start"><p>SMS:</p></div>
+                                    <div class="row w100 aln-center jst-start"><p>GIGA:</p></div>
+                                </div>
+                                <div class="col aln-start jst-start">
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getMinutes() > 0 ? service.getMinutes() : '-'}">Minutes</p></div>
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getSms() > 0 ? service.getSms() : '-'}">SMS</p></div>
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getGiga() > 0 ? service.getGiga() : '-'}">GIGA</p></div>
+                                </div>
+                            </div>
+                            <div class="row w50 aln-start jst-start">
+                                <div class="col aln-start jst-start" style="margin-right: 2rem">
+                                    <div class="row w100 aln-center jst-start"><p>Extra minutes fee:</p></div>
+                                    <div class="row w100 aln-center jst-start"><p>Extra SMS fee:</p></div>
+                                    <div class="row w100 aln-center jst-start"><p>Extra GIGA fee:</p></div>
+                                </div>
+                                <div class="col aln-start jst-start">
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraMinutesFee() > 0 ? service.getExtraMinutesFee() : '-'}">Extra minutes fee</p></div>
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraSmsFee() > 0 ? service.getExtraSmsFee() : '-'}">Extra SMS fee</p></div>
+                                    <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraGigaFee() > 0 ? service.getExtraGigaFee() : '-'}">Extra GIGA fee</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products selection -->
+                <div class="form-section col aln-start jst-start w100 margin-bottom-children-1 w100" th:if="${!package.getProducts().isEmpty()}">
+                    <h5>Optional products</h5>
+                    <div class="col w100 aln-center jst-start pb-1">
+                        <div class="row w100 aln-center jst-end table-heading">
+                            <div class="w10"> </div>
+                            <div class="w70 row aln-center jst-start">Name</div>
+                            <div class="w20 row aln-center jst-start">Fee</div>
+                        </div>
+                        <div class="w100 vertical-scroll table-body">
+                            <div class="row w100 aln-center jst-start" th:each="product : ${package.getProducts()}">
+                                <div class="row w10 aln-center jst-center odd-tbl-col table-cell"><input type="checkbox" name="products" th:value="${product.getIdProduct()}"></div>
+                                <div class="row w70 aln-center jst-start even-tbl-col table-cell"><span th:text="${product.getName()}">Name</span></div>
+                                <div class="row w20 aln-center jst-start odd-tbl-col table-cell"><span th:text="${product.getFee()}">Fee</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Start date selection -->
+                <div class="row w100 aln-center jst-start margin-right-children-2">
+                    <label>Start subscription from:</label>
+                    <input type="date" name="start-date" th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" lang="en-EN" class="input-fld" required>
+                </div>
+                <!-- Confirm button -->
+                <div class="col w100 aln-end jst-start pt-2">
+                    <input type="submit" class="submit-btn w30" value="Order">
+                </div>
+                <!-- Consider enrichment with js -->
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

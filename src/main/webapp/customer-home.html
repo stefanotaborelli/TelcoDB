@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TelcoDB | Customer Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/fe9e631225.js" crossorigin="anonymous"></script>
+
+    <style>
+        .content-wrapper {
+            min-width: 540px;
+            width: 80%;
+            max-width: 1080px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar row aln-center jst-center w100">
+        <div class="row aln-center jst-space-between w100">
+            <div class="row aln-center jst-start">
+                <a class="nav-link" href="customer-home">Home</a>
+<!--                <a class="nav-link" href="buy-package">Buy Package</a>-->
+            </div>
+            <div class="row aln-center jst-start margin-right-children-1" th:if="${session.userid != null && session.username != null}">
+                <div class="nav-link row aln-center" style="color: white;">
+                    <div>
+                        <i class="fa-solid fa-circle-user"></i>
+                    </div>
+                    <div>
+                        <span th:text="${session.username}" class="nav-link"></span>
+                    </div>
+                </div>
+                <a class="nav-link" href="logout-customer"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+            <div class="row aln-center jst-start" th:unless="${session.userid != null && session.username != null}">
+                <a class="nav-link" href="customer-landing">Log In</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="error-prompt w100" th:if="${param.error != null}">
+        <p th:text="${param.error}">Error log</p>
+    </section>
+    <section class="success-prompt w100" th:if="${param.success != null}">
+        <p th:text="'Operation successful!'">Success prompt</p>
+    </section>
+    <section class="warning-prompt w100" th:if="${param.warning != null}">
+        <p th:text="${param.warning}">Warning prompt</p>
+    </section>
+
+    <!-- Packages -->
+    <section class="centered w100" style="padding-bottom: 5rem; padding-top: 5rem;">
+        <div class="col w100 aln-center jst-center content-wrapper">
+            <h4 style="margin-bottom: 1rem;">Available Packages</h4>
+            <div class="col w100 aln-center jst-start pt-1">
+                <div class="row w100 aln-center jst-end table-heading">
+                    <div class="w40 row aln-center jst-start">Name</div>
+                    <div class="w40 row aln-center jst-start">
+                        <div class="w30 row aln-center jst-start">12 Months</div>
+                        <div class="w30 row aln-center jst-start">24 Months</div>
+                        <div class="w30 row aln-center jst-start">36 Months</div>
+                    </div>
+                    <div class="w20 row aln-center jst-start">Included Services</div>
+                </div>
+                <div class="w100 vertical-scroll table-body" style="max-height: 18rem">
+                    <div class="row w100 aln-center jst-start" th:each="package : ${packages}" style="height: 1.8rem">
+                        <a th:href="'package-page?id=' + ${package.getIdPackage()}" class="row w100 aln-center jst-start table-link">
+                            <div class="w40 row aln-center jst-start table-cell">
+                                <span th:text="${package.getName()}"> Package name </span>
+                            </div>
+                            <div class="w40 row aln-center jst-start table-cell">
+                                <div class="w30 row aln-center jst-start" th:each="validity : ${package.getValidities()}" >
+                                    <span th:text="${validity.getFee}"> Fee </span>
+                                </div>
+                            </div>
+                            <div class="w20 row aln-center jst-start table-cell">
+                                <span th:text="${package.getServices().size()}"> Services number </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Failed orders -->
+    <section class="centered w100" th:if="${pendingOrders != null && !pendingOrders.isEmpty()}" style="padding-bottom: 5rem;">
+        <div class="col w100 aln-center jst-center content-wrapper">
+            <h4 style="margin-bottom: 1rem;">Pending Orders</h4>
+            <div class="col w100 aln-center jst-start pt-1">
+                <div class="row w100 aln-center jst-start table-heading">
+                    <div class="w30 row aln-center jst-start">Package Name</div>
+                    <div class="w20 row aln-center jst-start">Start Date</div>
+                    <div class="w30 row aln-center jst-start">Create On</div>
+                    <div class="w20 row aln-center jst-start">Amount</div>
+                </div>
+                <div class="w100 vertical-scroll table-body" style="max-height: 18rem">
+                    <div class="row w100 aln-center jst-start" th:each="order : ${pendingOrders}" style="height: 1.8rem">
+                        <a th:href="'order-retrieval?id=' + ${order.getIdOrder()}" class="row w100 aln-center jst-start table-link">
+                            <div class="w30 row aln-center jst-start" >
+                                <span th:text="${order.getPackage().getName()}"> Package name </span>
+                            </div>
+                            <div class="w20 row aln-center jst-start" >
+                                <span th:text="${order.getStartDate()}"> Start date </span>
+                            </div>
+                            <div class="w30 row aln-center jst-start" >
+                                <span th:text="${order.getCreationDateTime()}"> Creation datetime </span>
+                            </div>
+                            <div class="w20 row aln-center jst-start" >
+                                <span th:text="${order.getDecimalTotalCost()}"> Amount </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+</html>

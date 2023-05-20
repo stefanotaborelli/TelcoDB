@@ -1,0 +1,518 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    font-family: 'Roboto', sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 0.1rem;
+}
+h2 {
+    margin: 0;
+    color: black;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+}
+h3 {
+    margin: 0;
+    color: dodgerblue;
+    font-size: 1.5rem;
+    letter-spacing: 0.05rem;
+}
+h4 {
+    margin: 0;
+    color: dodgerblue;
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+h5 {
+    margin: 0;
+}
+p {
+    margin: 0;
+}
+
+section {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.error-prompt {
+    background: red;
+    color: white;
+    font-style: italic;
+    margin: 0;
+    padding: 0.5rem 1rem;
+}
+.warning-prompt {
+    background: orange;
+    color: black;
+    font-style: italic;
+    margin: 0;
+    padding: 0.5rem 1rem;
+}
+.success-prompt {
+    background: limegreen;
+    color: white;
+    margin: 0;
+    padding: 0.5rem 1rem;
+}
+
+/** Forms **/
+div.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+div.login-container .content {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+div.login-container .content .error-prompt {
+    border-radius: 10px;
+}
+form.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 320px;
+    margin: 1rem 0;
+}
+.login-container p {
+    margin-top: 0.25rem;
+}
+.login-container h2 {
+    margin-bottom: 0.5rem;
+}
+.login-form .submit-btn {
+    padding: 0.5rem 1rem;
+}
+form.login-form input {
+    margin: 5px 0;
+}
+
+.submit-btn {
+    border: none;
+    border-radius: 5px;
+    background: dodgerblue;
+    font-size: 1.1rem;
+    color: white;
+    text-align: center;
+    padding: 0.2rem;
+}
+.input-fld{
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 0.2rem;
+    font-size: 1.1rem;
+    margin: 0.25rem 0;
+}
+form p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+}
+
+form.creation-form {
+    margin: 1rem 0;
+    padding: 0;
+    width: 720px;
+}
+form.creation-form .submit-btn {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+}
+form select {
+    margin: 0;
+    padding: 0 0.2em;
+    border-radius: 5px;
+    border: 1px solid gray;
+    font-size: 1.1rem;
+    /*height: 1.6rem;*/
+}
+form .input-container {
+    margin: 0.5rem 0;
+}
+
+/** Navbar **/
+.navbar {
+    padding: 1rem 0.5rem;
+    background-color: dodgerblue;
+}
+.nav-link {
+    margin: 0 1rem;
+    color: white;
+    text-decoration: none;
+}
+.nav-link:active {
+    color: white;
+}
+
+/** Flex **/
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row.jst-space-between, .col.jst-space-between {
+    justify-content: space-between !important;
+}
+
+.row.jst-center, .col.jst-center {
+    justify-content: center !important;
+}
+
+.row.jst-start, .col.jst-start {
+    justify-content: start !important;
+}
+
+.row.jst-end, .col.jst-end {
+    justify-content: end !important;
+}
+
+.row.jst-space-evenly, .col.jst-space-evenly {
+    justify-content: space-evenly !important;
+}
+
+.row.aln-start, .col.aln-start {
+    align-items: start !important;
+}
+
+.row.aln-center, .col.aln-center {
+    align-items: center !important;
+}
+
+.row.aln-end, .col.aln-end {
+    align-items: end !important;
+}
+
+
+/** Dimensions **/
+.w5 {
+    min-width: 5%;
+}
+.w10 {
+    min-width: 10%;
+}
+.w15 {
+    min-width: 15%;
+}
+.w20 {
+    min-width: 20%;
+}
+.w30 {
+    min-width: 30%;
+}
+.w40 {
+    min-width: 40%;
+}
+.w50 {
+    min-width: 50%;
+}
+.w60 {
+    min-width: 60%;
+}
+.w70 {
+    min-width: 70%;
+}
+.w80 {
+    min-width: 80%;
+}
+.w90 {
+    min-width: 90%;
+}
+.w100 {
+    min-width: 100%;
+}
+.w-full {
+    width: 100vw;
+}
+.w-half {
+    width: 50vw;
+}
+
+.h10 {
+    min-height: 10%;
+}
+.h20 {
+    min-height: 20%;
+}
+.h30 {
+    min-height: 30%;
+}
+.h40 {
+    min-height: 40%;
+}
+.h50 {
+    min-height: 50%;
+}
+.h60 {
+    min-height: 60%;
+}
+.h70 {
+    min-height: 70%;
+}
+.h80 {
+    min-height: 80%;
+}
+.h90 {
+    min-height: 90%;
+}
+.h100 {
+    min-height: 100%;
+}
+.h-full {
+    height: 100vw;
+}
+.h-half {
+    height: 50vw;
+}
+
+
+div.round-box {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+div.form-wrapper {
+    padding: 2rem;
+}
+
+.submit-btn {
+    padding: .25rem .5rem;
+}
+
+.form-title {
+    color: dodgerblue;
+    font-size: 1.75rem;
+    font-weight: bold;
+    letter-spacing: .1rem;
+    margin: .5rem 0;
+}
+
+.border-left-strong {
+    border-left: 3px solid gray;
+}
+.border-right-strong {
+    border-right: 3px solid gray;
+}
+.border-top-strong {
+    border-top: 3px solid gray;
+}
+.border-bottom-strong {
+    border-bottom: 3px solid gray;
+}
+.border-left {
+    border-left: 2px solid gray;
+}
+.border-right {
+    border-right: 2px solid gray;
+}
+.border-top {
+    border-top: 2px solid gray;
+}
+.border-bottom {
+    border-bottom: 2px solid gray;
+}
+.border-left-light {
+    border-left: 1px solid gray;
+}
+.border-right-light {
+    border-right: 1px solid gray;
+}
+.border-top-light {
+    border-top: 1px solid gray;
+}
+.border-bottom-light {
+    border-bottom: 1px solid gray;
+}
+
+.margin-top-children-1 > * {
+    margin-top: 0.25rem;
+}
+.margin-top-children-2 > * {
+    margin-top: 0.5rem;
+}
+.margin-top-children-3 > * {
+    margin-top: 1rem;
+}
+.margin-bottom-children-1 > * {
+    margin-bottom: 0.25rem;
+}
+.margin-bottom-children-2 > * {
+    margin-bottom: 0.5rem;
+}
+.margin-bottom-children-3 > * {
+    margin-bottom: 1rem;
+}
+.margin-left-children-1 > * {
+    margin-left: 0.25rem;
+}
+.margin-left-children-2 > * {
+    margin-left: 0.5rem;
+}
+.margin-left-children-3 > * {
+    margin-left: 1rem;
+}
+.margin-right-children-1 > * {
+    margin-right: 0.25rem;
+}
+.margin-right-children-2 > * {
+    margin-right: 0.5rem;
+}
+.margin-right-children-3 > * {
+    margin-right: 1rem;
+}
+
+.outlined {
+    background: none;
+    border: 2px solid dodgerblue;
+    color: dodgerblue;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.clean {
+    text-decoration: none;
+    color: dodgerblue;
+}
+.clean:active {
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+a.submit-btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+a.submit-btn:active {
+    text-decoration: none;
+}
+
+.bg-success {
+    background: limegreen;
+}
+.bg-danger {
+    background: red;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.active-btn:active {
+    transform: translateY(1px);
+}
+.inactive-btn {
+    background: gray;
+}
+
+.even-tbl-col {
+    background: white;
+}
+.odd-tbl-col {
+    background: white;
+}
+
+
+div.vertical-scroll {
+    display: block;
+    width:100%;
+    overflow-y: auto;
+}
+
+div.table-heading {
+    border-bottom: 1px solid gray;
+    padding: 0.1rem 0;
+}
+div.table-heading > div {
+    font-weight: bold;
+}
+div.table-body {
+    max-height: 15rem;
+    border-bottom: 1px solid gray;
+}
+div.table-cell {
+    height: 1.5rem;
+}
+
+.pr-1 {
+    padding-right: 0.25rem;
+}
+.pr-2 {
+    padding-right: 0.5rem;
+}
+.pr-3 {
+    padding-right: 1rem;
+}
+.pl-1 {
+    padding-left: 0.25rem;
+}
+.pl-2 {
+    padding-left: 0.5rem;
+}
+.pl-3 {
+    padding-left: 1rem;
+}
+.pt-1 {
+    padding-top: 0.25rem;
+}
+.pt-2 {
+    padding-top: 0.5rem;
+}
+.pt-3 {
+    padding-top: 1rem;
+}
+.pb-1 {
+    padding-bottom: 0.25rem;
+}
+.pb-2 {
+    padding-bottom: 0.5rem;
+}
+.pb-3 {
+    padding-bottom: 1rem;
+}
+
+.table-link {
+    color: black;
+    text-decoration: none;
+}
+.table-link:active {
+    color: black;
+    text-decoration: none;
+}

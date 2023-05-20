@@ -1,0 +1,28 @@
+actor Employee
+Employee ->> Client : CREATE
+Client ->> CreatePackageController : doPost
+activate CreatePackageController
+CreatePackageController ->> PackageService : findByName
+activate PackageService
+PackageService -->> CreatePackageController : packageList
+deactivate PackageService 
+
+alt packageList.isEmpty()
+CreatePackageController ->> PackageService : createPackage
+activate PackageService  
+PackageService ->> Validity : new
+activate Validity
+Validity -->> PackageService : 
+deactivate Validity
+PackageService ->> Package : new
+activate Package
+Package -->> PackageService : 
+deactivate Package
+PackageService -->> CreatePackageController : 
+deactivate PackageService
+CreatePackageController -->> Client: redirect (/employee-home?success)
+
+else
+CreatePackageController ->> Client: redirect (/employee-home?error)
+deactivate CreatePackageController
+end

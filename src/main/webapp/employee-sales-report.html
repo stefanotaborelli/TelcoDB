@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>Employee - Sales Report</title>
+
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+            .content-wrapper {
+                min-width: 720px;
+                width: 100%;
+                max-width: 1080px;
+                padding: 1rem;
+            }
+            h5 {
+                font-size: 1rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <header class="navbar row aln-center jst-center w100">
+            <div class="row aln-center jst-space-between w100">
+                <div class="row aln-center jst-start">
+                    <a class="nav-link" href="employee-home">Home</a>
+                    <a class="nav-link" href="sales-report">Sales Report</a>
+                </div>
+                <a class="nav-link" href="logout-employee">Log Out</a>
+            </div>
+        </header>
+
+        <section class="col aln-center jst-center w100" style="padding-bottom: 3rem;">
+            <!-- PurchasePerPackage -->
+            <div class="content-wrapper" th:if="${purchasesPerPackageViewsList != null && !purchasesPerPackageViewsList.isEmpty()}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2 border-bottom-light">
+                    <h4>Number of purchases per package</h4>
+                    <div class="row w100 aln-center jst-start border-bottom-light">
+                        <div class="row w10 jst-start aln-center">
+                            <h5>ID</h5>
+                        </div>
+                        <div class="row w70 jst-start aln-center">
+                            <h5>Package Name</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>Purchases</h5>
+                        </div>
+                    </div>
+                    <div class="row w100 aln-center jst-start" th:each="purchasePerPackage : ${purchasesPerPackageViewsList}">
+                        <div class="row w10 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getIdPackage()}">Package ID</p>
+                        </div>
+                        <div class="row w70 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getName()}">Package name</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getNumOfPurchases()}">Purchases</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${purchasesPerPackageViewsList != null && !purchasesPerPackageViewsList.isEmpty()}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Number of purchases per package</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+            <!-- PurchasePerPackageValidity -->
+            <div class="content-wrapper" th:if="${purchasesPerPackageValidityViewList != null && !purchasesPerPackageValidityViewList.isEmpty()}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2 border-bottom-light">
+                    <h4>Number of purchases per package divided for validity</h4>
+                    <div class="row w100 aln-center jst-start border-bottom-light">
+                        <div class="row w10 jst-start aln-center">
+                            <h5>ID</h5>
+                        </div>
+                        <div class="row w30 jst-start aln-center">
+                            <h5>Package Name</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>Duration</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>Fee</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>Purchases</h5>
+                        </div>
+                    </div>
+                    <div class="row w100 aln-center jst-start" th:each="purchasePerPackage : ${purchasesPerPackageValidityViewList}">
+                        <div class="row w10 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getIdPackage()}">Package ID</p>
+                        </div>
+                        <div class="row w30 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getName()}">Package name</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getDuration() == 0 ? '-' : purchasePerPackage.getDuration()}">Duration</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getFee() == null ? '-' : purchasePerPackage.getFee()}">Fee</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${purchasePerPackage.getNumOfPurchases()}">Purchases</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${purchasesPerPackageValidityViewList != null && !purchasesPerPackageValidityViewList.isEmpty()}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Number of purchases per package divided for validity</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+            <!-- TotalSalesValue -->
+            <div class="content-wrapper" th:if="${totalSalesValueViewList != null && !totalSalesValueViewList.isEmpty()}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2 border-bottom-light">
+                    <h4>Total sales value per package</h4>
+                    <div class="row w100 aln-center jst-start border-bottom-light">
+                        <div class="row w10 jst-start aln-center">
+                            <h5>ID</h5>
+                        </div>
+                        <div class="row w50 jst-start aln-center">
+                            <h5>Package Name</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>W/out products</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>W/ products</h5>
+                        </div>
+                    </div>
+                    <div class="row w100 aln-center jst-start" th:each="totalSalesValue : ${totalSalesValueViewList}">
+                        <div class="row w10 jst-start aln-center">
+                            <p th:text="${totalSalesValue.getIdPackage()}">Package ID</p>
+                        </div>
+                        <div class="row w50 jst-start aln-center">
+                            <p th:text="${totalSalesValue.getName()}">Package name</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${totalSalesValue.getSalesWoutProducts()}">W/out products</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${totalSalesValue.getSalesWProducts()}">W/ products</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${totalSalesValueViewList != null && !totalSalesValueViewList.isEmpty()}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Total sales value per package</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+            <!-- AvgProductSold -->
+            <div class="content-wrapper" th:if="${avgProductSoldList != null && !avgProductSoldList.isEmpty()}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2 border-bottom-light">
+                    <h4>Average number of products per package</h4>
+                    <div class="row w100 aln-center jst-start border-bottom-light">
+                        <div class="row w10 jst-start aln-center">
+                            <h5>ID</h5>
+                        </div>
+                        <div class="row w70 jst-start aln-center">
+                            <h5>Package Name</h5>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <h5>Average</h5>
+                        </div>
+                    </div>
+                    <div class="row w100 aln-center jst-start" th:each="avgProductSold : ${avgProductSoldList}">
+                        <div class="row w10 jst-start aln-center">
+                            <p th:text="${avgProductSold.getIdPackage()}">Package ID</p>
+                        </div>
+                        <div class="row w70 jst-start aln-center">
+                            <p th:text="${avgProductSold.getName()}">Package name</p>
+                        </div>
+                        <div class="row w20 jst-start aln-center">
+                            <p th:text="${avgProductSold.getAvgNumOfProducts()}">Average</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${avgProductSoldList != null && !avgProductSoldList.isEmpty()}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Average number of products per package</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+            <!-- InsolventCustomersReport -->
+            <div class="content-wrapper" th:if="${customerReportList != null && !customerReportList.isEmpty()}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2">
+                    <h4>Insolvent customers report</h4>
+                    <div class="col w100 aln-start jst-start border-left-strong pl-1" th:each="report : ${customerReportList}" th:style="'border-color:' + ${report.hasAlert() ? 'orange' : 'gray'} + '; margin-top: 0.5rem;'">
+                        <div class="row w100 aln-center jst-start pt-1 pb-1">
+                            <div class="row w40 aln-center jst-start">
+                                <p><strong>Username: </strong><span th:text="${report.getUsername()}">username</span></p>
+                            </div>
+                            <div class="row w40 aln-center jst-start">
+                                <p>
+                                    <strong>Email: </strong>
+                                    <a th:href="'mailto:' + ${report.getEmail()}" th:text="${report.getEmail()}" style="text-decoration: none; color: dodgerblue"></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div th:if="${report.hasAlert()}" class="warning-prompt w100" style="height: 2.25rem; border-radius: 2.25rem; margin: 0.25rem 0">
+                            <p><strong>Alert!</strong> Last payment at <span th:text="${report.getAlertReport().getLastPayment()}">LAST PAYMENT DATETIME</span> of <span th:text="${report.getAlertReport().getAmount()}">AMOUNT</span></p>
+                        </div>
+                        <div class="col w100 aln-start jst-start pt-2">
+                            <div class="row w100 aln-center jst-start border-bottom-light">
+                                <div class="row w20 jst-start aln-center">
+                                    <h5>ID Order</h5>
+                                </div>
+                                <div class="row w30 jst-start aln-center">
+                                    <h5>Starting on</h5>
+                                </div>
+                                <div class="row w30 jst-start aln-center">
+                                    <h5>Created at</h5>
+                                </div>
+                                <div class="row w20 jst-start aln-center">
+                                    <h5>Total Cost</h5>
+                                </div>
+                            </div>
+                            <div class="row w100 aln-center jst-start pt-2" th:each="orderReport : ${report.getOrderReportList()}">
+                                <div class="row w20 jst-start aln-center">
+                                    <p th:text="${orderReport.getIdOrder()}">ID Order</p>
+                                </div>
+                                <div class="row w30 jst-start aln-center">
+                                    <p th:text="${orderReport.getStartDate()}">Starting on</p>
+                                </div>
+                                <div class="row w30 jst-start aln-center">
+                                    <p th:text="${orderReport.getCreationDateTime()}">Created at</p>
+                                </div>
+                                <div class="row w20 jst-start aln-center">
+                                    <p th:text="${orderReport.getTotalCost()}">Total Cost</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${customerReportList != null && !customerReportList.isEmpty()}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Insolvent customers report</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+            <!-- BestSellerProduct -->
+            <div class="content-wrapper" th:if="${bestSellerProductView != null}">
+                <div class="col w100 aln-start jst-start margin-bottom-children-2 border-bottom-light">
+                    <h4>Best seller product</h4>
+                    <div class="row w100 aln-center jst-start">
+                        <div class="row w60 jst-start aln-center">
+                            <strong th:text="${bestSellerProductView.getProductName()}">Product name</strong>
+                        </div>
+                        <div class="row w40 jst-end aln-center">
+                            <p>(Value of sales: <strong th:text="${bestSellerProductView.getValueOfSales()}">VALUE</strong>)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper pt-2 pb-2" th:unless="${bestSellerProductView != null}">
+                <div class="col w100 aln-start jst-center margin-bottom-children-2">
+                    <h4>Best seller product</h4>
+                    <p>Nothing to show</p>
+                </div>
+            </div>
+
+        </section>
+
+    </body>
+</html>

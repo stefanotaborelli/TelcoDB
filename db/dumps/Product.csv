@@ -1,0 +1,15 @@
+#,idProduct,name,fee
+1,1,Netflix (Base),7.99
+2,2,Netflix (Standard),12.99
+3,3,Netflix (Premium),17.99
+4,4,Sky Q,9.00
+5,5,Sky TV + Sky Family + Sky Cinema,29.90
+6,6,Sky TV + Sky Sport,24.90
+7,7,Apple TV+,14.95
+8,8,Apple One,14.99
+9,9,Apple Music,9.99
+10,10,Apple Music (Family),14.99
+11,11,Spotify,9.99
+12,12,Spotify (Student),4.99
+13,13,Amazon Prime,3.00
+14,14,Amazon Prime (Student),1.50

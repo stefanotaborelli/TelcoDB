@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Confirm Order</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/fe9e631225.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body class="col aln-center jst-center">
+    <!-- Order summary -->
+    <section class="col w40 aln-center jst-start">
+      <h1 >Package name</h1>
+      <div class="col w100 aln-start jst-start pt-3">
+        <h4>Included Services</h4>
+        <div class="col w100 aln-start jst-start pt-1 border-bottom-light pb-1 pt-1" th:each="service : ${session.orderSummary.getPackage().getServices()}">
+          <p>Type: <span th:text="${service.getServiceTypeHumanReadable()}" style="text-transform: uppercase">Service type</span></p>
+          <div class="row w100 aln-center jst-space-between pt-1">
+            <div class="row w50 aln-center jst-start">
+              <div class="col aln-start jst-start" style="margin-right: 2rem">
+                <div class="row w100 aln-center jst-start"><p>Minutes:</p></div>
+                <div class="row w100 aln-center jst-start"><p>SMS:</p></div>
+                <div class="row w100 aln-center jst-start"><p>GIGA:</p></div>
+              </div>
+              <div class="col aln-start jst-start">
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getMinutes() > 0 ? service.getMinutes() : '-'}">Minutes</p></div>
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getSms() > 0 ? service.getSms() : '-'}">SMS</p></div>
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getGiga() > 0 ? service.getGiga() : '-'}">GIGA</p></div>
+              </div>
+            </div>
+            <div class="row w50 aln-start jst-start">
+              <div class="col aln-start jst-start" style="margin-right: 2rem">
+                <div class="row w100 aln-center jst-start"><p>Extra minutes fee:</p></div>
+                <div class="row w100 aln-center jst-start"><p>Extra SMS fee:</p></div>
+                <div class="row w100 aln-center jst-start"><p>Extra GIGA fee:</p></div>
+              </div>
+              <div class="col aln-start jst-start">
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraMinutesFee() > 0 ? service.getExtraMinutesFee() : '-'}">Extra minutes fee</p></div>
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraSmsFee() > 0 ? service.getExtraSmsFee() : '-'}">Extra SMS fee</p></div>
+                <div class="row w100 aln-center jst-start"><p th:text="${service.getExtraGigaFee() > 0 ? service.getExtraGigaFee() : '-'}">Extra GIGA fee</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col w100 aln-start jst-start pt-3">
+        <h4>Validity</h4>
+        <div class="row w100 aln-start jst-start pt-1 border-bottom-light pb-1 pt-1">
+          <div class="col aln-start jst-start pr-2">
+            <p>Duration: </p>
+            <p>Fee: </p>
+          </div>
+          <div class="col aln-start jst-start">
+            <p th:text="${session.orderSummary.getValidity().getDuration()}">duration</p>
+            <p th:text="${session.orderSummary.getValidity().getFee()}">fee</p>
+          </div>
+        </div>
+      </div>
+      <div class="col w100 aln-start jst-start pt-3" th:if="${session.orderSummary.getProducts().size() > 0}">
+        <h4>Optional Products</h4>
+        <div class="row w100 aln-start jst-start pt-1 border-bottom-light pb-1 pt-1">
+          <div class="col aln-start jst-start pr-2">
+            <p>Name: </p>
+            <p>Fee: </p>
+          </div>
+          <div class="col aln-start jst-start" th:each="product : ${session.orderSummary.getProducts()}">
+            <p th:text="${product.getName()}">name</p>
+            <p th:text="${product.getFee()}">fee</p>
+          </div>
+        </div>
+      </div>
+      <div class="col w100 aln-start jst-start pt-3">
+        <div class="row w100 aln-start jst-end pt-1 pb-1 pt-1">
+          <div class="col aln-end jst-start pr-2">
+            <h3>Total cost: </h3>
+          </div>
+          <div class="col aln-end jst-start">
+            <h3 th:text="${session.orderSummary.getDecimalTotalCost()}">total cost</h3>
+          </div>
+        </div>
+      </div>
+      <!-- Login / Buy -->
+      <div class="row w100 aln-center jst-center pt-3" th:if="${session.userid != null}">
+        <div class="w50 pr-2" style="height: 2.25rem">
+          <a th:href="'package-page?id=' + ${session.orderSummary.getPackage().getIdPackage()}"><button class="submit-btn outlined w100 pt-1 pb-1" style="height: 100%">CANCEL</button></a>
+        </div>
+        <div class="w50 pl-2" style="height: 2.25rem">
+          <form action="buy" method="POST" style="height: 100%">
+            <input type="submit" class="submit-btn w100 pt-1 pb-1" style="height: 100%" value="BUY">
+          </form>
+        </div>
+      </div>
+      <div class="row w100 aln-center jst-center pt-3" th:if="${session.userid == null}">
+        <div class="w50 pr-2" style="height: 2.25rem">
+          <a href="customer-landing" style="height: 100%">
+            <button class="submit-btn outlined w100 pt-1 pb-1" style="height: 100%; font-size: 1.25rem">Log in or register to continue</button>
+          </a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

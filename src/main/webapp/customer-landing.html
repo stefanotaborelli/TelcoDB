@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <section class="error-prompt w100" th:if="${param.error != null}">
+        <p th:text="${param.error}">Error log</p>
+    </section>
+    <section class="success-prompt w100" th:if="${param.success != null}">
+        <p th:text="'Operation successful!'">Success prompt</p>
+    </section>
+
+    <div class="col jst-center aln-center w100 h100 margin-bottom-children-2">
+        <h1>Customer</h1>
+        <div class="round-box col aln-center jst-center">
+            <div class="row aln-start jst-space-between">
+                <!-- Login -->
+                <div class="form-wrapper col aln-center jst-space-between">
+                    <h1 class="form-title">
+                        Login
+                    </h1>
+                    <form class="col aln-center jst-space-evenly margin-bottom-children-2" action="login-customer" method="POST">
+                        <div class="col w100">
+                            <input class="input-fld" type="text" name="username" placeholder="username" required>
+                            <input class="input-fld" type="password" name="password" placeholder="password" required>
+                        </div>
+                        <div class="col w100">
+                            <input class="submit-btn w100" type="submit" value="Log In">
+                        </div>
+                    </form>
+                    <a class="w100 h100" href="customer-home" th:if="${session.order == null}"><button class="submit-btn w100 outlined">Skip Login</button></a>
+                </div>
+
+                <!-- Signup -->
+                <div class="form-wrapper col aln-center jst-space-between border-left">
+                    <h1 class="form-title">
+                        Register
+                    </h1>
+                    <form class="col aln-center st-space-evenly margin-bottom-children-2" action="signup-customer" method="POST">
+                        <div class="col w100">
+                            <input class="input-fld" type="email" name="email" placeholder="email" required>
+                            <input class="input-fld" type="text" name="username" placeholder="username" required>
+                            <input class="input-fld" type="password" name="password" placeholder="password" required>
+                        </div>
+                        <input class="submit-btn w100" type="submit" value="Sign Up">
+                    </form>
+                </div>
+            </div>
+            <div class="row w100 aln-center jst-end" th:if="${session.order == null}">
+                <p><a class="clean" href="index.jsp">Back</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

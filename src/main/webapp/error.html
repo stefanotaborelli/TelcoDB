@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Error</title>
+	<link rel="stylesheet" type="text/css" media="all" href="/TIW-Project/css/style.css"/>
+	<style>
+		#error-container{
+			margin:auto;
+			text-align:center;
+			padding:20px;
+			background-color: white;
+			border-radius:10px;
+			width: 400px;
+		}
+		#error-image{
+			margin-bottom: 20px;
+		}
+		.circle1 {
+            background: linear-gradient(to bottom left, dodgerblue, cyan);
+            bottom: 5rem;
+            left: 10rem;
+            height: 30rem;
+            width: 30rem;
+        }
+        .circle2 {
+            background: linear-gradient(to bottom right, cyan, dodgerblue);
+            top: 5rem;
+            right: 15rem;
+            height: 20rem;
+            width: 20rem;
+        }
+        .circle3 {
+            background: linear-gradient(to top left, dodgerblue, cyan);
+            top: 2.5rem;
+            right: 35rem;
+            height: 5rem;
+            width: 5rem;
+        }
+		
+		/* BG SCENE */
+        #circle1 {
+            background: linear-gradient(to bottom left, dodgerblue, cyan);
+            bottom: 5rem;
+            left: 10rem;
+            height: 30rem;
+            width: 30rem;
+        }
+        #circle2 {
+            background: linear-gradient(to bottom right, cyan, dodgerblue);
+            top: 5rem;
+            right: 15rem;
+            height: 20rem;
+            width: 20rem;
+        }
+        #circle3 {
+            background: linear-gradient(to top left, dodgerblue, cyan);
+            top: 2.5rem;
+            right: 35rem;
+            height: 5rem;
+            width: 5rem;
+        }
+	</style>
+</head>
+
+<body>
+	<div class="j-center glass text-primary" id="error-container">
+		<img src="./img/error_cat.gif" id="error-image">
+    	<div th:if="${errorMessage}" th:text="${errorMessage}">There was an error while trying to perform your request.</div>
+	</div>
+    <span class="bg-circle" id="circle1"></span>
+    <span class="bg-circle" id="circle2"></span>
+    <span class="bg-circle" id="circle3"></span>
+</body>
+</html>

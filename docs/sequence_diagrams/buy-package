@@ -1,0 +1,60 @@
+sequenceDiagram
+actor User
+
+User ->> Client : BUY
+Client ->> BuyController : doPost (/buy)
+activate BuyController
+
+BuyController ->> Session : getAttribute("userid")
+activate Session
+Session -->> BuyController : userid
+deactivate Session
+BuyController ->> Session : getAttribute("orderSummary)
+activate Session
+Session -->> BuyController : orderSummary
+deactivate Session
+
+BuyController ->> OrderService : payOrder
+activate OrderService
+OrderService ->> PaymentService : pay
+activate PaymentService
+PaymentService -->> OrderService : paymentStatus
+deactivate PaymentService
+
+alt paymentStatus == true
+OrderService ->> Order : new (paid)
+activate Order
+Order -->> OrderService :
+deactivate Order
+OrderService ->> Schedule : new
+activate Schedule
+Schedule -->> OrderService :
+deactivate Schedule
+OrderService -->> BuyController : result
+
+else
+OrderService ->> Order : new (not-paid)
+activate Order
+Order -->> OrderService :
+deactivate Order
+OrderService ->> Customer : increaseFailedPayments
+activate Customer
+Customer -->> OrderService : failedPayments
+deactivate Customer
+alt failedPayments == 3
+OrderService ->> Alert : new
+activate Alert
+Alert -->> OrderService :
+deactivate Alert
+else failedPayments > 3
+OrderService ->> Alert : set
+activate Alert
+Alert -->> OrderService :
+deactivate Alert
+end
+OrderService -->> BuyController : result
+deactivate OrderService
+end
+
+BuyController -->> Client : redirect (/customer-home?result)
+deactivate BuyController

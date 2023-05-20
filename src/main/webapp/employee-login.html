@@ -1,0 +1,65 @@
+<!doctype HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Employee - Log In</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<!--<body class="col aln-center jst-start">-->
+<!--    <section class="error-prompt w100" th:if="${param.error != null}">-->
+<!--        <p th:text="${param.error}">Error log</p>-->
+<!--    </section>-->
+<!--    <div class="centered w100 h100">-->
+<!--        <div class="login-container">-->
+<!--            <div class="content">-->
+<!--                <div class="col aln-center jst-center">-->
+<!--                    <h2>Employee</h2>-->
+<!--                    <h2>Login</h2>-->
+<!--                </div>-->
+<!--                <form class="login-form" action="login-employee" method="POST">-->
+<!--                    <input class="input-fld" type="text" name="username" placeholder="username" required>-->
+<!--                    <input class="input-fld" type="password" name="password" placeholder="password" required>-->
+<!--                    <input class="submit-btn" type="submit" value="Login">-->
+<!--                </form>-->
+<!--                <p><a class="clean" href="index.jsp">Back</a></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</body>-->
+    <body>
+        <section class="error-prompt w100" th:if="${param.error != null}">
+            <p th:text="${param.error}">Error log</p>
+        </section>
+
+        <div class="col jst-center aln-center w100 h100 margin-bottom-children-2">
+            <h1>Employee</h1>
+            <div class="round-box col aln-center jst-center">
+                <div class="row aln-start jst-space-between">
+                    <!-- Login -->
+                    <div class="form-wrapper col aln-center jst-space-between">
+                        <h1 class="form-title">
+                            Login
+                        </h1>
+                        <form class="col aln-center jst-space-evenly margin-bottom-children-2" action="login-employee" method="POST">
+                            <div class="col w100">
+                                <input class="input-fld" type="text" name="username" placeholder="username" required>
+                                <input class="input-fld" type="password" name="password" placeholder="password" required>
+                            </div>
+                            <div class="col w100">
+                                <input class="submit-btn w100" type="submit" value="Log In">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row w100 aln-center jst-end">
+                    <p><a class="clean" href="index.jsp">Back</a></p>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,25 @@
+actor User
+
+User ->> Client : LOGIN
+Client ->> LoginController : doPost
+activate LoginController
+LoginController ->> UserService : checkCredentials
+activate UserService
+UserService -->> LoginController : user
+deactivate UserService 
+
+alt user == null
+LoginController -->> Client : redirect (/login?error)
+
+else
+LoginController ->> Session : setAttribute("userid")
+activate Session
+Session -->> LoginController :
+deactivate Session
+LoginController ->> Session : setAttribute("username")
+activate Session
+Session -->> LoginController: 
+deactivate Session
+LoginController -->> Client: redirect (/home)
+
+end
